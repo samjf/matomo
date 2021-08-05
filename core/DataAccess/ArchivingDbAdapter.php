@@ -45,50 +45,56 @@ class ArchivingDbAdapter
 
     public function exec($sql)
     {
-        $sql = DbHelper::addMaxExecutionTimeHintToQuery($sql, $this->maxExecutionTime);
-        $this->logSql($sql);
+        $arguments = func_get_args();
+        $arguments[0] = DbHelper::addMaxExecutionTimeHintToQuery($arguments[0], $this->maxExecutionTime);
+        $this->logSql($arguments[0]);
 
-        return call_user_func_array([$this->wrapped, __FUNCTION__], func_get_args());
+        return call_user_func_array([$this->wrapped, __FUNCTION__], $arguments);
     }
 
     public function query($sql)
     {
-        $sql = DbHelper::addMaxExecutionTimeHintToQuery($sql, $this->maxExecutionTime);
-        $this->logSql($sql);
+        $arguments = func_get_args();
+        $arguments[0] = DbHelper::addMaxExecutionTimeHintToQuery($arguments[0], $this->maxExecutionTime);
+        $this->logSql($arguments[0]);
 
-        return call_user_func_array([$this->wrapped, __FUNCTION__], func_get_args());
+        return call_user_func_array([$this->wrapped, __FUNCTION__], $arguments);
     }
 
     public function fetchAll($sql)
     {
-        $sql = DbHelper::addMaxExecutionTimeHintToQuery($sql, $this->maxExecutionTime);
-        $this->logSql($sql);
+        $arguments = func_get_args();
+        $arguments[0] = DbHelper::addMaxExecutionTimeHintToQuery($arguments[0], $this->maxExecutionTime);
+        $this->logSql($arguments[0]);
 
-        return call_user_func_array([$this->wrapped, __FUNCTION__], func_get_args());
+        return call_user_func_array([$this->wrapped, __FUNCTION__], $arguments);
     }
 
     public function fetchRow($sql)
     {
-        $sql = DbHelper::addMaxExecutionTimeHintToQuery($sql, $this->maxExecutionTime);
-        $this->logSql($sql);
+        $arguments = func_get_args();
+        $arguments[0] = DbHelper::addMaxExecutionTimeHintToQuery($arguments[0], $this->maxExecutionTime);
+        $this->logSql($arguments[0]);
 
-        return call_user_func_array([$this->wrapped, __FUNCTION__], func_get_args());
+        return call_user_func_array([$this->wrapped, __FUNCTION__], $arguments);
     }
 
     public function fetchOne($sql)
     {
-        $sql = DbHelper::addMaxExecutionTimeHintToQuery($sql, $this->maxExecutionTime);
-        $this->logSql($sql);
+        $arguments = func_get_args();
+        $arguments[0] = DbHelper::addMaxExecutionTimeHintToQuery($arguments[0], $this->maxExecutionTime);
+        $this->logSql($arguments[0]);
 
-        return call_user_func_array([$this->wrapped, __FUNCTION__], func_get_args());
+        return call_user_func_array([$this->wrapped, __FUNCTION__], $arguments);
     }
 
     public function fetchAssoc($sql)
     {
-        $sql = DbHelper::addMaxExecutionTimeHintToQuery($sql, $this->maxExecutionTime);
-        $this->logSql($sql);
+        $arguments = func_get_args();
+        $arguments[0] = DbHelper::addMaxExecutionTimeHintToQuery($arguments[0], $this->maxExecutionTime);
+        $this->logSql($arguments[0]);
 
-        return call_user_func_array([$this->wrapped, __FUNCTION__], func_get_args());
+        return call_user_func_array([$this->wrapped, __FUNCTION__], $arguments);
     }
 
     private function logSql($sql)
