@@ -13,6 +13,7 @@ class DashboardTime extends \Piwik\Plugin
     public function registerEvents()
     {
         return [
+            'AssetManager.getStylesheetFiles' => 'getStylesheetFiles',
             'AssetManager.getJavaScriptFiles' => 'getJsFiles',
             'CronArchive.getArchivingAPIMethodForPlugin' => 'getArchivingAPIMethodForPlugin',
         ];
@@ -21,6 +22,11 @@ class DashboardTime extends \Piwik\Plugin
     public function getJsFiles(&$jsFiles)
     {
         $jsFiles[] = "plugins/DashboardTime/angularjs/current-time-widget/current-time-widget.directive.js";
+    }
+
+    public function getStylesheetFiles(&$stylesheets)
+    {
+        $stylesheets[] = "plugins/DashboardTime/angularjs/current-time-widget/current-time-widget.directive.css";
     }
 
     // support archiving just this plugin via core:archive

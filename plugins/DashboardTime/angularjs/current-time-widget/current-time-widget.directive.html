@@ -1,9 +1,14 @@
-<div>
+<div class="currentTimeWidget">
   <div ng-if="!showOnlySite">
-    <h4>Local Time</h4>
-    <h5>{{localDateTimeStr}}</h5>
+    <h4>Local</h4>
+    <p>
+      <strong>{{localDateTimeStr}}</strong>
+    </p>
   </div>
 
-  <h4>Website Time</h4>
-  <h5>{{siteDateTimeStr}}</h5>
+  <h4>Website</h4>
+  <p>
+    <small><em>{{websiteTimezone}}</em></small><br>
+    <strong>{{siteDateTimeStr}}</strong>
+  </p>
 </div>

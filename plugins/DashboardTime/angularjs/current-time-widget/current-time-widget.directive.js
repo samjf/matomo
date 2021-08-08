@@ -34,6 +34,9 @@
           controller: function($scope) {
             $scope.showOnlySite = false;
 
+            var defaultFormat = new Intl.DateTimeFormat();
+            var defaultLocale = defaultFormat.resolvedOptions().locale;
+
             this.defaultDateTimeFormat = {
                 timeStyle: "short",
                 dateStyle: "short",
@@ -42,8 +45,8 @@
               timeZone: $scope.websiteTimezone
             });
 
-            this.siteDateTimeFormat = new Intl.DateTimeFormat('en-US', mergedFormatOptions);
-            this.localDateTimeFormat = new Intl.DateTimeFormat('en-US', this.defaultDateTimeFormat);
+            this.siteDateTimeFormat = new Intl.DateTimeFormat(defaultLocale, mergedFormatOptions);
+            this.localDateTimeFormat = new Intl.DateTimeFormat(defaultLocale, this.defaultDateTimeFormat);
 
             this.updateTimes = function () {
               var now = new Date();
