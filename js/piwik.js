@@ -68,7 +68,7 @@
     setCampaignNameKey, setCampaignKeywordKey,
     getConsentRequestsQueue, requireConsent, getRememberedConsent, hasRememberedConsent, isConsentRequired,
     setConsentGiven, rememberConsentGiven, forgetConsentGiven, unload, hasConsent,
-    discardHashTag, alwaysUseSendBeacon, disableAlwaysUseSendBeacon, isUsingAlwaysUseSendBeacon,
+    discardHashTag, enableFileProtocolTracking, alwaysUseSendBeacon, disableAlwaysUseSendBeacon, isUsingAlwaysUseSendBeacon,
     setCookieNamePrefix, setCookieDomain, setCookiePath, setSecureCookie, setVisitorIdCookie, getCookieDomain, hasCookies, setSessionCookie,
     setVisitorCookieTimeout, setSessionCookieTimeout, setReferralCookieTimeout, getCookie, getCookiePath, getSessionCookieTimeout,
     setConversionAttributionFirstReferrer, tracker, request,
@@ -2396,7 +2396,13 @@ if (typeof window.Matomo !== 'object') {
                 uniqueTrackerId = trackerIdCounter++,
 
                 // whether a tracking request has been sent yet during this page view
-                hasSentTrackingRequestYet = false;
+                hasSentTrackingRequestYet = false,
+
+                // whether or not the file (file://) protocol should be tracked
+                configAllowFileProtocol = false,
+
+                // whether or not the protocol used should be tracked 
+                allowTrackingOfProtocol = true;
 
             // Document title
             try {
@@ -2940,7 +2946,7 @@ if (typeof window.Matomo !== 'object') {
 
                 hasSentTrackingRequestYet = true;
 
-                if (!configDoNotTrack && request) {
+                if (!configDoNotTrack && allowTrackingOfProtocol && request) {
                     if (configConsentRequired && configHasConsent) { // send a consent=1 when explicit consent is given for the apache logs
                         request += '&consent=1';
                     }
@@ -3585,6 +3591,11 @@ if (typeof window.Matomo !== 'object') {
                     currentUrl = configCustomUrl || locationHrefAlias,
                     campaignNameDetected,
                     campaignKeywordDetected;
+
+                if (!configAllowFileProtocol && getProtocolScheme(currentUrl) === 'file') {
+                    allowTrackingOfProtocol = false;
+                    return '';
+                }
 
                 if (configCookiesDisabled) {
                     deleteCookies();
@@ -6019,6 +6030,14 @@ if (typeof window.Matomo !== 'object') {
                     this.disableCookies();
                 }
             };
+
+            /**
+             * Allows the file protocol to be tracked when the url contains `file://`
+             */
+            this.enableFileProtocolTracking = function (enable) {
+                configAllowFileProtocol = enable;
+            };
+
 
             /**
              * Enables send beacon usage instead of regular XHR which reduces the link tracking time to a minimum
